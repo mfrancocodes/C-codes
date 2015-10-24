@@ -1,0 +1,134 @@
+#include <iostream>
+#include <iomanip>
+#include <vector>
+
+
+using namespace std;
+
+int main()
+{
+
+//Declare variables.
+
+	int numPackages, miles, totalDistance = 0, multiplier = 0;
+	vector<double> packageWeight, packageDistance;
+	double weight, distance, totalWeight = NULL, shippingRate;
+
+//Display shipping rates.
+
+	cout << "\n\t  Hello, and welcome to The Fast Freight Shipping Company!\n" << endl;
+	cout << "The company charges the following rates based upon package size and destination\n" << endl;
+	cout << "    Weight of Package (in Kilograms)     " << setw(20) << "Rate per 500 Miles Shipped" <<endl;
+	cout << "\t\t2kg or less" << setw(27) << "$1.10" << endl;
+	cout << "    Over 2 kg but not more than 6 kg" << setw(18) << "$2.20" << endl;
+	cout << "    Over 6 kg but not more than 10 kg" << setw(17) << "$3.70" << endl;
+	cout << "    Over 10 kg but not more than 20 kg" << setw(16) << "$4.80" << endl << endl << endl;
+
+//Ask for and bring in user entry.
+
+	cout << "How many packages would you like to ship?\n" << endl;
+	cin >> numPackages;
+
+//Use while loop to determine if entry is valid. Display entry.
+
+	while (numPackages == 0)
+	{
+		cout << "\nSorry, but this is not a valid entry. Please re-enter a number greater than 0: \n\n";
+		cin >> numPackages;
+	}
+	if (numPackages == 1)
+	{
+		cout << "\nOk, great. You would like to ship " << numPackages << " package today." << endl << endl;
+	}
+	else if (numPackages > 1)
+	{
+		cout << "\nOk, great. You would like to ship " << numPackages << " packages today." << endl << endl;
+	}
+
+//Ask for weight and distance for each package. If entries are invalid, prompt userto re-enter valid entries.
+
+	cout << "\nNext, please enter the weight for each package (in kg.), followed by its " << endl;
+	cout << "shipping distance (in miles)." << endl;
+	cout << "\n(Remember, each package must weigh more than 0kg, yet weigh 20kg or less. " << endl;
+	cout << "Each package must also be shipped at least 10 miles, but no more than 3,000 \nmiles)\n" << endl;
+
+//Set up an array to increment both the weight and distance for packages.
+
+	for(int i = 0; i < numPackages; i++)
+	{
+		cout << "\nPackage #" << (i + 1) << " Weight: ";
+		cin >> weight;
+		
+		packageWeight.push_back(weight);
+	
+		while (weight <= 0 || weight > 20)
+		{
+		cout << "\nSorry, but this is not a valid input. Please re-enter a weight greater than 0kg," <<
+			"but no heavier than 20kg: \n" << endl;
+		cin >> weight;
+		}
+		totalWeight += weight;
+		
+		cout << "\nPackage #" << (i + 1) << " Distance: ";
+		cin >> distance;
+		
+		packageDistance.push_back(distance);
+		
+		while (distance < 10 || distance > 3000)
+		{
+		cout << "\nSorry, but this is not a valid input. Please re-enter a distance greater than orequal to 10 miles," <<
+			    " but less than or equal to 3000 miles: \n" << endl;
+		cin >> distance;
+		}
+		totalDistance += distance;
+	}
+
+//Display both the weight and distance totals for the packages.
+
+	cout << "\n\n***************************************************************" << endl;
+	cout << "\n\nThe total weight for your package(s) is: " << totalWeight << "kg." << endl;
+	cout << "\nThe total distance for your package(s) is: " << totalDistance << " miles." << endl;
+	
+	
+//Set shipping rates for package weight
+
+	if (totalWeight <= 2)
+	{
+		shippingRate = 1.10;
+	}
+	else if (totalWeight > 2 && totalWeight <= 6)
+	{
+		shippingRate = 2.20;
+	}
+	else if (totalWeight > 6 && totalWeight <= 10)
+	{
+		shippingRate = 3.70;
+	}
+	else if (totalWeight > 10 && totalWeight <= 20)
+	{
+		shippingRate = 4.80;
+	}
+	else shippingRate = 4.80;
+
+//Implement mathematical equations to determine the correct price for shipping of packages.
+	
+	if(totalDistance % 500 == 0)
+	{
+		multiplier = totalDistance / 500;
+	}
+	else
+	{
+		multiplier = (totalDistance / 500) + 1;
+	}
+
+
+//Display final total.
+	
+	cout << setprecision(2) << fixed;
+	cout << "\n\nYour total shipping charges are: $" << (shippingRate * multiplier) << endl << endl;
+	cout << "\n***************************************************************" << endl << endl;
+	
+	system("PAUSE");
+	
+	return 0;
+}
